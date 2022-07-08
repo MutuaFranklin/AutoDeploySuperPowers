@@ -98,7 +98,7 @@ jobs:
           paths: [backend/node_modules]
           key: backend-deps
 
-   test-frontend:
+  test-frontend:
     docker:
       # Docker image here
     steps:
