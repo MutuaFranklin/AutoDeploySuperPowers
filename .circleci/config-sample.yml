@@ -4,35 +4,34 @@ commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
-      Workflow_ID:
-        type: string
-        default: ${CIRCLE_WORKFLOW_ID:0:7}
+      # Add parameter here   
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
-            echo "Destroying environment: << parameters.Workflow_ID >>"
-            aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
-            aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
-            aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
+            # Your code here
+            exit 1
 
   revert-migrations:
-    description: Revert the last migration
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      # Add parameter here     
     steps:
       - run:
           name: Revert migrations
-          when: on_fail
+          # Add when this will run
           command: |
-            export SUCCESS=$(curl --insecure https://kvdb.io/Y6wdqe23fyTTdGMZN1oYbo/migration_${CIRCLE_WORKFLOW_ID:0:7})
-            echo $SUCCESS
-            if (( $SUCCESS == 1 ));
+            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
+            SUCCESS = 1
+            if(( $SUCCESS==1 )); 
             then
-              cd ~/project/backend
-              npm install
-              npm run migrations:revert
+            #  cd ~/project/backend
+            #  npm install
+            #  Add revert code here. You can find this in the Getting Started section.
+              exit 1
             fi
-
+            
 jobs:
   build-frontend:
     docker:
@@ -44,9 +43,8 @@ jobs:
       - run:
           name: Build front-end
           command: |
-            cd frontend
-            npm install
-            npm run build
+            # Your code here
+            exit 1
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -61,9 +59,8 @@ jobs:
       - run:
           name: Back-end build
           command: |
-            cd backend
-            npm install
-            npm run build
+             # Your code here
+             exit 1
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
